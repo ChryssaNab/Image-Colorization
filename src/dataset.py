@@ -55,8 +55,7 @@ class DatasetColorization(Dataset):
 
         Returns
         -------
-        dictionary
-            A dictionary with the input and target images to be used later for the model
+        Dictionary with the preprocessed input and target images to be used later in the model
         """
 
         # Load RGB image and apply data transformations
@@ -82,7 +81,7 @@ class DatasetColorization(Dataset):
 
 
 def get_dataloader(data_path, image_size=256, batch_size=16, training_mode=True):
-    """Creates a DataLoader object with the preprocessed images.
+    """Creates a DataLoader object with preprocessed images.
 
     Parameters
     ----------
