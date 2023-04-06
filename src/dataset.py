@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import torch
 import torchvision.transforms as T
 
 from PIL import Image
@@ -105,9 +106,28 @@ def get_dataloader(data_path, image_size=256, batch_size=16, training_mode=True)
     return dataloader
 
 
-data = get_dataloader(data_path="../Dataset/training/")
+def setup_input(data_batch):
+    """Separates the grayscale input images from the target images for training the networks.
 
-data = next(iter(data))
-input, target = data['input'], data['target']
-print(input.shape, target.shape)
+    Parameters
+    ----------
+    data_batch : <class 'dict'>
+        a batch of 16 images
+
+    Returns
+    -------
+    The grayscale input images of size [16, 1, 256, 256] and the target images of size [16, 2, 256, 256]
+    """
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    input_real = data_batch['input'].to(device)
+    target_real = data_batch['target'].to(device)
+    return input_real, target_real
+
+
+dataloader = get_dataloader(data_path="../Dataset/training/")
+
+for data in dataloader:
+    setup_input(data)
+    break
 
