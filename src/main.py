@@ -1,12 +1,14 @@
 import argparse
 
+from training import train_model
+
 
 def main():
     image_size = 256
     batch_size = 16
     num_epochs = 100
-    train_data_path = "./Dataset/training/"
-    test_data_path = "./Dataset/test/"
+    train_data_path = "../Dataset/training/"
+    test_data_path = "../Dataset/test/"
 
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
@@ -27,6 +29,7 @@ def main():
 
     args = parser.parse_args()
     # Run the pipeline given the args
+    train_model(args)
 
 
 if __name__ == "__main__":
