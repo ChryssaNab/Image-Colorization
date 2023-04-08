@@ -26,11 +26,13 @@ def main():
                         type=int, help="Number of epochs to train the model")
     parser.add_argument("--pretraining_mode", default=True,
                         type=bool, help="Enable pre-training")
-    parser.add_argument("--lr_g", default = 0.0002, type=float, help="Generator learning rate")
-    parser.add_argument("--lr_d", default= 0.0002, type=float, help="Discriminator learning rate")
+    parser.add_argument("--lr_g", default=0.0002,
+                        type=float, help="Generator learning rate")
+    parser.add_argument("--lr_d", default=0.0002,
+                        type=float, help="Discriminator learning rate")
 
     args = parser.parse_args()
-    # Run the pipeline given the args
+    # Train the GAN model for the given args
     train_model(args)
 
 

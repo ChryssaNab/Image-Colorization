@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import torch
 import torchvision.transforms as T
 
 from PIL import Image
@@ -11,7 +10,7 @@ from torch.utils.data import Dataset, DataLoader
 
 class DatasetColorization(Dataset):
 
-    """A class used to represent the preprocessing of the image data.
+    """ A class used to represent the preprocessing of the image data.
 
     Attributes
     ----------
@@ -47,12 +46,12 @@ class DatasetColorization(Dataset):
             ])
 
     def __getitem__(self, img_idx):
-        """Loads and preprocesses all images.
+        """ Loads and preprocesses all images.
 
         Parameters
         ----------
         img_idx : <class 'int'>
-            The index with the image from the self.images_list to be processed
+            the index with the image from the self.images_list to be processed
 
         Returns
         -------
@@ -82,7 +81,7 @@ class DatasetColorization(Dataset):
 
 
 def get_dataloader(data_path, image_size=256, batch_size=16, training_mode=True):
-    """Creates a DataLoader object with preprocessed images.
+    """ Creates a DataLoader object with preprocessed images.
 
     Parameters
     ----------

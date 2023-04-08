@@ -3,8 +3,42 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+class Generator(nn.Module):
+    """ Defines the Generator network for GAN.
+
+    Arguments
+    ----------
+    training_mode : <class 'bool'>
+        boolean to control whether to generate a pre-trained ResNet encoder or a U-Net encoder from scratch
+
+    Attributes
+    ----------
+    encoder_net : PyTorch model object of encoder
+        the encoder network of the generator
+    decoder_net : PyTorch model object of decoder
+        the decoder network of the generator
+    """
+
+    def __init__(self, training_mode=True):
+        super().__init__()
+        self.encoder_features = None
+        self.decoder_features = None
+
+        if training_mode:
+            self.encoder_net = ResNetEncoder()
+        else:
+            self.encoder_net = UNetEncoder()
+
+        self.decoder_net = UNetDecoder(self.encoder_net)
+
+    def forward(self, x):
+        self.encoder_features = self.encoder_net(x)
+        self.decoder_features = self.decoder_net(self.encoder_features)
+        return self.decoder_features
+
+
 class PatchDiscriminator(nn.Module):
-    """Defines a Patch discriminator for GAN.
+    """ Defines the Patch Discriminator network for GAN.
 
     Arguments
     ----------
@@ -37,8 +71,8 @@ class PatchDiscriminator(nn.Module):
             normal_init(self._modules[m], mean, std)
 
     # Forward method
-    def forward(self, input, label):
-        x = torch.cat([input, label], 1)
+    def forward(self, input_img, output_img):
+        x = torch.cat([input_img, output_img], 1)
         x = F.leaky_relu(self.conv1(x), 0.2)
         x = F.leaky_relu(self.conv2_bn(self.conv2(x)), 0.2)
         x = F.leaky_relu(self.conv3_bn(self.conv3(x)), 0.2)

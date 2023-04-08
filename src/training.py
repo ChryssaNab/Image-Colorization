@@ -4,14 +4,14 @@ from dataset import get_dataloader
 
 
 def setup_input(data_batch, device):
-    """Separates the grayscale input images from the target images for training the networks.
+    """ Separates the grayscale input images from the color target images for training the networks.
 
     Parameters
     ----------
     data_batch : <class 'dict'>
         a batch of 16 images
     device : <class 'torch.device'>
-        CPU or CUDA
+        CPU or CUDA selected device
 
     Returns
     -------
