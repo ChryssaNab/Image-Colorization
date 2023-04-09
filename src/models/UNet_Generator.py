@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torchvision.models import resnet18, ResNet18_Weights
 
 
 class UNetEncoder(nn.Module):
@@ -66,28 +65,6 @@ class UNetEncoder(nn.Module):
     def weight_init(self, mean, std):
         for m in self._modules:
             normal_init(self._modules[m], mean, std)
-
-
-class ResNetEncoder(nn.Module):
-    """ Defines the ResNet-18 encoder for the Generator. """
-
-    def __init__(self):
-        super().__init__()
-
-        self.resnet18 = resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
-
-    def forward(self, x):
-        self.block1 = self.resnet18.conv1(x)
-        self.block1 = self.resnet18.bn1(self.block1)
-        self.block1 = self.resnet18.relu(self.block1)  # [64, H/2, W/2]
-
-        self.block2 = self.resnet18.maxpool(self.block1)
-        self.block2 = self.resnet18.layer1(self.block2)  # [64, H/4, W/4]
-        self.block3 = self.resnet18.layer2(self.block2)  # [128, H/8, W/8]
-        self.block4 = self.resnet18.layer3(self.block3)  # [256, H/16, W/16]
-        self.block5 = self.resnet18.layer4(self.block4)  # [512, H/32, W/32]
-
-        return self.block5
 
 
 class UNetDecoder(nn.Module):
@@ -186,89 +163,7 @@ class UNetDecoder(nn.Module):
             normal_init(self._modules[m], mean, std)
 
 
-class Generator(nn.Module):
-    """ Defines the Generator network for GAN.
-
-    Arguments
-    ----------
-    pretrained : <class 'bool'> (default=False)
-        boolean to control whether to generate a pretrained ResNet encoder or a U-Net encoder from scratch
-
-    Attributes
-    ----------
-    encoder_net : PyTorch model object of encoder
-        the encoder network of the Generator
-    decoder_net : PyTorch model object of decoder
-        the decoder network of the Generator
-    """
-
-    def __init__(self, pretrained=False):
-        super().__init__()
-
-        if pretrained:
-            self.encoder_net = ResNetEncoder()
-        else:
-            self.encoder_net = UNetEncoder()
-
-        self.decoder_net = UNetDecoder(self.encoder_net)
-
-    def forward(self, image):
-        encoded_features = self.encoder_net(image)
-        decoded_features = self.decoder_net(encoded_features)
-        return decoded_features
-
-
-class PatchDiscriminator(nn.Module):
-    """ Defines the Patch Discriminator network for GAN.
-
-    Arguments
-    ----------
-    in_channels : <class 'int'>
-        the number of input channels
-    out_channels : <class 'int'>
-        the number of output channels
-    kernel_size : <class 'int'>
-        the convolution kernel size
-    stride : <class 'int'>
-        the stride to be used for the convolution
-    padding : <class 'int'>
-        the padding to be used for the convolution
-    """
-
-    def __init__(self, in_channels=3, out_channels=64, kernel_size=4, stride=2, padding=1):
-        super(PatchDiscriminator, self).__init__()
-
-        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding)
-        self.conv2 = nn.Conv2d(out_channels, out_channels * 2, kernel_size=kernel_size, stride=stride, padding=padding)
-        self.conv2_bn = nn.BatchNorm2d(out_channels * 2)
-        self.conv3 = nn.Conv2d(out_channels * 2, out_channels * 4, kernel_size=kernel_size, stride=stride, padding=padding)
-        self.conv3_bn = nn.BatchNorm2d(out_channels * 4)
-        self.conv4 = nn.Conv2d(out_channels * 4, out_channels * 8, kernel_size=kernel_size, stride=1, padding=padding)
-        self.conv4_bn = nn.BatchNorm2d(out_channels * 8)
-        self.conv5 = nn.Conv2d(out_channels * 8, 1, kernel_size=kernel_size, stride=1, padding=padding)
-
-    # Initialize weights from a Gaussian distribution with mean 0 and std 0.02
-    def weight_init(self, mean, std):
-        for m in self._modules:
-            normal_init(self._modules[m], mean, std)
-
-    def forward(self, image):
-        x = F.leaky_relu(self.conv1(image), 0.2)  # [64, 128, 128]
-        x = F.leaky_relu(self.conv2_bn(self.conv2(x)), 0.2)  # [128, 64, 64]
-        x = F.leaky_relu(self.conv3_bn(self.conv3(x)), 0.2)  # [256, 32, 32]
-        x = F.leaky_relu(self.conv4_bn(self.conv4(x)), 0.2)  # [512, 31, 31]
-        x = F.sigmoid(self.conv5(x))  # [1, 30, 30]
-
-        return x
-
-
 def normal_init(m, mean, std):
     if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d):
         m.weight.data.normal_(mean, std)
         m.bias.data.zero_()
-
-
-discriminator = PatchDiscriminator()
-print(discriminator)
-discriminator.weight_init(mean=0.0, std=0.02)
-print(Generator())
