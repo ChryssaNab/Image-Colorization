@@ -1,7 +1,8 @@
 import torch.nn as nn
 import torch
 from torch import optim
-from model import Generator, PatchDiscriminator
+from models.Generator import Generator
+from models.Discriminator import PatchDiscriminator
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def set_requires_grad(model, requires_grad=True):
