@@ -79,44 +79,46 @@ class ColorizationGAN(nn.Module):
                 
 
     """
-    def optimize(self,L, ab):
+    def optimize(self, L, ab):
 
         L = L.to(device)
         ab = ab.to(device)
 
-        #Get color channels from generator
+        # Get color channels from generator
         fake_ab = self.net_G(L)
         self.disc.train()
         set_requires_grad(self.disc, True)
         self.disc.zero_grad()
 
-        #Compose fake images and pass them to the discriminator
+        # Compose fake images and pass them to the discriminator
         fake_image = torch.cat([L, fake_ab], dim=1)
         fake_preds = self.disc(fake_image.detach())
         loss_D_fake = self.GANloss(fake_preds, False)
-        #Pass the real images to the discriminator
+
+        # Pass the real images to the discriminator
         real_image = torch.cat([L, ab], dim=1)
         real_preds = self.disc(real_image)
         loss_D_real = self.GANloss(real_preds, True)
-        #Combine losses and calculate the gradients
+
+        # Combine losses and calculate the gradients
         loss_D = (loss_D_fake + loss_D_real) * 0.5
         loss_D.backward()
 
-        #Update the discriminator parameters
+        # Update the discriminator parameters
         self.opt_D.step()
 
         self.gen.train()
         self.set_requires_grad(self.disc, False)
         self.opt_G.zero_grad()
 
-        #Combine the "reward signal" from the discriminator with L1 loss
+        # Combine the "reward signal" from the discriminator with L1 loss
         fake_preds = self.net_D(fake_image)
         loss_G_GAN = self.GANloss(fake_preds, True)
         loss_G_L1 = self.L1Loss(fake_ab, ab) * self.lambda_L1
         loss_G = loss_G_GAN + loss_G_L1
         loss_G.backward()
 
-        #Update the parameters of the generator
+        # Update the parameters of the generator
         self.opt_G.step()
 
         return loss_D.item(), loss_G.item()
