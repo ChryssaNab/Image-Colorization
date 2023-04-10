@@ -65,9 +65,7 @@ class ColorizationGAN(nn.Module):
         self.GANloss = nn.Module
         self.L1Loss = nn.Module
 
-        # Instantiate Adam optimizers
-        self.opt_G = optim.Adam(self.net_G.parameters(), lr=lr_g, betas=(beta1, beta2))
-        self.opt_D = optim.Adam(self.net_D.parameters(), lr=lr_d, betas=(beta1, beta2))
+
 
     def optimize(self, L, ab):
         """ Performs one round of training on a batch of images in the Lab colorspace.
@@ -85,11 +83,12 @@ class ColorizationGAN(nn.Module):
         loss_G : The loss for the generator (GANloss + L1)
         """
 
+        #setup_input(?) - .to(device) already done in training.py(?)
         L = L.to(device)
         ab = ab.to(device)
 
         # Get color channels from Generator
-        fake_ab = self.net_G(L)
+        fake_ab = self.gen(L)
         self.disc.train()
         set_requires_grad(self.disc, True)
         self.disc.zero_grad()
@@ -116,7 +115,7 @@ class ColorizationGAN(nn.Module):
         self.opt_G.zero_grad()
 
         # Combine the "reward signal" from the Discriminator with L1 loss
-        fake_preds = self.net_D(fake_image)
+        fake_preds = self.disc(fake_image)
         loss_G_GAN = self.GANloss(fake_preds, True)
         loss_G_L1 = self.L1Loss(fake_ab, ab) * self.lambda_L1
         loss_G = loss_G_GAN + loss_G_L1
@@ -148,14 +147,14 @@ class ColorizationGAN(nn.Module):
         ab = ab.to(device)
 
         # Get color channels from Generator
-        fake_ab = self.net_G(L)
+        fake_ab = self.gen(L)
 
         self.gen.eval()
         self.disc.eval()
 
         with torch.no_grad:
             # Get color channels from Generator
-            fake_ab = self.net_G(L)
+            fake_ab = self.gen(L)
             # Compose fake images and pass them to the Discriminator
             fake_image = torch.cat([L, fake_ab], dim=1)
             fake_preds = self.disc(fake_image.detach())
@@ -168,7 +167,7 @@ class ColorizationGAN(nn.Module):
             loss_D = (loss_D_fake + loss_D_real) * 0.5
 
             # Combine the "reward signal" from the Discriminator with L1 loss
-            fake_preds = self.net_D(fake_image)
+            fake_preds = self.disc(fake_image)
             loss_G_GAN = self.GANloss(fake_preds, True)
             loss_G_L1 = self.L1Loss(fake_ab, ab) * self.lambda_L1
             loss_G = loss_G_GAN + loss_G_L1
@@ -192,7 +191,7 @@ class ColorizationGAN(nn.Module):
         L = L.to(device)
         self.gen.eval()
         # Get color channels from Generator
-        fake_ab = self.net_G(L)
+        fake_ab = self.gen(L)
         # Compose fake images
         fake_image = torch.cat([L, fake_ab], dim=1)
         return fake_image

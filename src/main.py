@@ -1,5 +1,5 @@
 import argparse
-
+from GANModel import ColorizationGAN
 from training import train_model
 
 
@@ -31,9 +31,14 @@ def main():
     parser.add_argument("--lr_d", default=0.0002,
                         type=float, help="Discriminator learning rate")
 
+    # Parse arguments
     args = parser.parse_args()
+
+    # Initialize GAN model
+    model = ColorizationGAN()
+
     # Train the GAN model for the given args
-    train_model(args)
+    train_model(args, model)
 
 
 if __name__ == "__main__":

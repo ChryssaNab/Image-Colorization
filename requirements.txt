@@ -6,5 +6,5 @@ packaging==23.0
 Pillow==9.5.0
 PyWavelets==1.4.1
 scikit-image==0.20.0
-scipy==1.10.1
+scipy
 tifffile==2023.3.21

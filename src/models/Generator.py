@@ -1,7 +1,6 @@
 import torch.nn as nn
-
-from ResNet_Generator import ResNetEncoder
-from UNet_Generator import UNetEncoder, UNetDecoder
+from models.ResNet_Generator import ResNetEncoder
+from models.UNet_Generator import UNetEncoder, UNetDecoder
 
 
 class Generator(nn.Module):
