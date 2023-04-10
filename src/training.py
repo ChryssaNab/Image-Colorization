@@ -26,6 +26,7 @@ def setup_input(data_batch, device):
 def train_model(args):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(device)
 
     train_dataloader = get_dataloader(args.train_data_path, args.image_size, args.batch_size)
 
