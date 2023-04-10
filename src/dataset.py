@@ -19,6 +19,8 @@ class DatasetColorization(Dataset):
         the path with the images to be processed
     image_size : <class 'int'>
         the size of an image
+    pretrained : <class 'bool'>
+        boolean to control whether we want ResNet pretraining or not
     images_list : <class 'list'>
         a list with the names of all images under the path
 
