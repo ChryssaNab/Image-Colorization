@@ -68,7 +68,7 @@ class UNetEncoder(nn.Module):
 
 
 class UNetDecoder(nn.Module):
-    """ Defines the decoder network for the Generator.
+    """ Defines the U-Net-style decoder network for the Generator.
 
     Arguments
     ----------
@@ -114,7 +114,7 @@ class UNetDecoder(nn.Module):
         up_7 = torch.cat([self.encoder_net.block1, up_7], dim=1)  # [128, H/2, W/2]
 
         up_8 = self.up_block8(F.relu(up_7))  # [2, H, W]
-        output_image = F.tanh(up_8)
+        output_image = torch.tanh(up_8)
 
         return output_image
 
