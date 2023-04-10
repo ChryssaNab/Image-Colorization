@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import torch
 import torchvision.transforms as T
 
 from PIL import Image
@@ -27,10 +28,11 @@ class DatasetColorization(Dataset):
         Loads and preprocesses all images
     """
 
-    def __init__(self, data_path, image_size=256, training_mode=True):
+    def __init__(self, data_path, image_size=256, pretrained=False, training_mode=True):
 
         self.data_path = data_path
         self.image_size = image_size
+        self.pretrained = pretrained
         self.images_list = os.listdir(self.data_path)
 
         if training_mode:
@@ -74,13 +76,17 @@ class DatasetColorization(Dataset):
         L_channel = img_lab[[0], ...] / 50 - 1.
         ab_channel = img_lab[[1, 2], ...] / 110
 
+        if self.pretrained:
+            # Repeat l channel 3 times to fit the pretrained ResNet input
+            L_channel = torch.repeat_interleave(L_channel, 3, dim=0)
+
         return {"input": L_channel, "target": ab_channel}
 
     def __len__(self):
         return len(self.images_list)
 
 
-def get_dataloader(data_path, image_size=256, batch_size=16, training_mode=True):
+def get_dataloader(data_path, image_size=256, batch_size=16, pretrained=False, training_mode=True):
     """ Creates a DataLoader object with preprocessed images.
 
     Parameters
@@ -91,6 +97,8 @@ def get_dataloader(data_path, image_size=256, batch_size=16, training_mode=True)
         the size of an image
     batch_size : <class 'int'>
         the batch size for processing the images by the model
+    pretrained : <class 'bool'>
+        boolean to control whether we want ResNet pretraining or not
     training_mode : <class 'bool'>
         boolean to control whether to generate a train or validation set object
 
@@ -100,7 +108,7 @@ def get_dataloader(data_path, image_size=256, batch_size=16, training_mode=True)
     """
 
     print("Training mode is:", training_mode)
-    dataset = DatasetColorization(data_path, image_size=image_size, training_mode=training_mode)
+    dataset = DatasetColorization(data_path, image_size=image_size, pretrained=pretrained, training_mode=training_mode)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=training_mode)
     return dataloader
 
