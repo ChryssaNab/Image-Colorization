@@ -63,8 +63,8 @@ class UNetEncoder(nn.Module):
 
     # Initialize encoder weights from a Gaussian distribution with mean 0 and std 0.02
     def weight_init(self, mean, std):
-        for m in self._modules:
-            normal_init(self._modules[m], mean, std)
+        for name, layer in self.named_modules():
+            normal_init(layer, mean, std)
 
 
 class UNetDecoder(nn.Module):
@@ -159,11 +159,11 @@ class UNetDecoder(nn.Module):
 
     # Initialize decoder weights from a Gaussian distribution with mean 0 and std 0.02
     def weight_init(self, mean, std):
-        for m in self._modules:
-            normal_init(self._modules[m], mean, std)
+        for name, layer in self.named_modules():
+            normal_init(layer, mean, std)
 
 
 def normal_init(m, mean, std):
     if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d):
         m.weight.data.normal_(mean, std)
-        m.bias.data.zero_()
+        #m.bias.data.zero_()

@@ -1,12 +1,12 @@
 import argparse
-from GANModel import ColorizationGAN
+
 from training import train_model
 
 
 def main():
     image_size = 256
     batch_size = 16
-    num_epochs = 100
+    num_epochs = 1
     train_data_path = "../Dataset/training/"
     test_data_path = "../Dataset/test/"
 
@@ -31,14 +31,9 @@ def main():
     parser.add_argument("--lr_d", default=0.0002,
                         type=float, help="Discriminator learning rate")
 
-    # Parse arguments
     args = parser.parse_args()
-
-    # Initialize GAN model
-    model = ColorizationGAN()
-
     # Train the GAN model for the given args
-    train_model(args, model)
+    train_model(args)
 
 
 if __name__ == "__main__":

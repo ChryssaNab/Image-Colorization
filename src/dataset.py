@@ -113,8 +113,3 @@ def get_dataloader(data_path, image_size=256, batch_size=16, pretrained=False, t
     dataset = DatasetColorization(data_path, image_size=image_size, pretrained=pretrained, training_mode=training_mode)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=training_mode)
     return dataloader
-
-
-# dataloader = get_dataloader(data_path="../Dataset/training/")
-
-

@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -41,7 +42,7 @@ class PatchDiscriminator(nn.Module):
         x = F.leaky_relu(self.conv2_bn(self.conv2(x)), 0.2)  # [128, 64, 64]
         x = F.leaky_relu(self.conv3_bn(self.conv3(x)), 0.2)  # [256, 32, 32]
         x = F.leaky_relu(self.conv4_bn(self.conv4(x)), 0.2)  # [512, 31, 31]
-        x = F.sigmoid(self.conv5(x))  # [1, 30, 30]
+        x = torch.sigmoid(self.conv5(x))  # [1, 30, 30]
 
         return x
 
@@ -50,8 +51,3 @@ def normal_init(m, mean, std):
     if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d):
         m.weight.data.normal_(mean, std)
         m.bias.data.zero_()
-
-
-discriminator = PatchDiscriminator()
-print(discriminator)
-discriminator.weight_init(mean=0.0, std=0.02)

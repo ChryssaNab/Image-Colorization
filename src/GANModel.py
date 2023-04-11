@@ -1,8 +1,10 @@
-import torch.nn as nn
 import torch
+import torch.nn as nn
 from torch import optim
-from models.Generator import Generator
+
 from models.Discriminator import PatchDiscriminator
+from models.Generator import Generator
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 """ A class for combining the Generator and Discriminator models and train them alternately.
@@ -25,14 +27,10 @@ optimize():
 """
 
 
-def set_requires_grad(model, requires_grad=True):
-    for p in model.parameters():
-        p.requires_grad = requires_grad
-
-
 class GANLoss(nn.Module):
     def __init__(self, real_label=1.0, fake_label=0.0):
         super().__init__()
+
         self.register_buffer('real_label', torch.tensor(real_label))
         self.register_buffer('fake_label', torch.tensor(fake_label))
         self.loss = nn.BCELoss()
@@ -42,6 +40,7 @@ class GANLoss(nn.Module):
             labels = self.real_label
         else:
             labels = self.fake_label
+
         return labels.expand_as(preds)
 
     def __call__(self, preds, target_is_real):
@@ -49,11 +48,19 @@ class GANLoss(nn.Module):
         loss = self.loss(preds, labels)
         return loss
 
+
+def set_requires_grad(model, requires_grad=True):
+    for p in model.parameters():
+        p.requires_grad = requires_grad
+
+
 class ColorizationGAN(nn.Module):
     """ Class initialization method. Initialize Generator, Discriminator, and optimizers.
 
     Arguments
     ----------
+    device : <class 'torch.device'>
+        CPU or CUDA selected device
     lr_g : <class 'float'>
         the learning rate for the Generator parameters
     lr_d : <class 'float'>
@@ -68,26 +75,33 @@ class ColorizationGAN(nn.Module):
         boolean to control whether to generate a pretrained ResNet encoder or a U-Net encoder from scratch
     """
 
-    def __init__(self, lr_g=0.0002, lr_d=0.0002, beta1=0.5, beta2=0.999, lambda_l1=100, pretrained=True):
+    def __init__(self, device, lr_g=0.0002, lr_d=0.0002, beta1=0.5, beta2=0.999, lambda_l1=100, pretrained=True):
         super().__init__()
 
+        self.device = device
         self.lambda_l1 = lambda_l1
-
         # Instantiate the Generator network
         self.gen = Generator(pretrained)
+
+        # Initialize the weights of the Generator
+        if not pretrained:
+            self.gen.encoder_net.weight_init(mean=0.0, std=0.02)
+        self.gen.decoder_net.weight_init(mean=0.0, std=0.02)
         self.gen = self.gen.to(device)
-        # Instantiate the Discriminator network
+        print(self.gen)
+
+        # Instantiate the Discriminator network and initialize its weights
         self.disc = PatchDiscriminator()
+        self.disc.weight_init(mean=0.0, std=0.02)
         self.disc = self.disc.to(device)
 
-        # This will be replaced with the implementation of the gan loss
-        self.GANloss = GANLoss()
+        # Instantiate the losses
+        self.GANloss = GANLoss().to(self.device)
         self.L1Loss = nn.L1Loss()
 
         # Instantiate Adam optimizers
         self.opt_G = optim.Adam(self.gen.parameters(), lr=lr_g, betas=(beta1, beta2))
         self.opt_D = optim.Adam(self.disc.parameters(), lr=lr_d, betas=(beta1, beta2))
-
 
     def optimize(self, L, ab):
         """ Performs one round of training on a batch of images in the Lab colorspace.
@@ -129,26 +143,23 @@ class ColorizationGAN(nn.Module):
         self.opt_D.step()
 
         self.gen.train()
-        self.set_requires_grad(self.disc, False)
+        set_requires_grad(self.disc, False)
         self.opt_G.zero_grad()
 
         # Combine the "reward signal" from the Discriminator with L1 loss
         fake_preds = self.disc(fake_image)
         loss_G_GAN = self.GANloss(fake_preds, True)
-        loss_G_L1 = self.L1Loss(fake_ab, ab) * self.lambda_L1
+        loss_G_L1 = self.L1Loss(fake_ab, ab) * self.lambda_l1
         loss_G = loss_G_GAN + loss_G_L1
         loss_G.backward()
 
         # Update the parameters of the Generator
         self.opt_G.step()
 
+        self.loss_D = loss_D
         self.loss_D_real = loss_D_real
         self.loss_D_fake = loss_D_fake
-        self.loss_G_GAN= loss_G_GAN
-        self.loss_G_L1= loss_G_L1
-        self.loss_G= loss_G
-
-
+        self.loss_G = loss_G
 
     def test(self, L, ab):
         """ Passes the input through the GAN in test mode.
@@ -192,8 +203,6 @@ class ColorizationGAN(nn.Module):
 
         self.loss_D_real = loss_D_real
         self.loss_D_fake = loss_D_fake
-        self.loss_G_GAN = loss_G_GAN
-        self.loss_G_L1 = loss_G_L1
         self.loss_G = loss_G
 
         return fake_image
