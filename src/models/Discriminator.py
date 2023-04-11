@@ -24,11 +24,11 @@ class PatchDiscriminator(nn.Module):
         super(PatchDiscriminator, self).__init__()
 
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding)
-        self.conv2 = nn.Conv2d(out_channels, out_channels * 2, kernel_size=kernel_size, stride=stride, padding=padding)
+        self.conv2 = nn.Conv2d(out_channels, out_channels * 2, kernel_size=kernel_size, stride=stride, padding=padding, bias=False)
         self.conv2_bn = nn.BatchNorm2d(out_channels * 2)
-        self.conv3 = nn.Conv2d(out_channels * 2, out_channels * 4, kernel_size=kernel_size, stride=stride, padding=padding)
+        self.conv3 = nn.Conv2d(out_channels * 2, out_channels * 4, kernel_size=kernel_size, stride=stride, padding=padding, bias=False)
         self.conv3_bn = nn.BatchNorm2d(out_channels * 4)
-        self.conv4 = nn.Conv2d(out_channels * 4, out_channels * 8, kernel_size=kernel_size, stride=1, padding=padding)
+        self.conv4 = nn.Conv2d(out_channels * 4, out_channels * 8, kernel_size=kernel_size, stride=1, padding=padding, bias=False)
         self.conv4_bn = nn.BatchNorm2d(out_channels * 8)
         self.conv5 = nn.Conv2d(out_channels * 8, 1, kernel_size=kernel_size, stride=1, padding=padding)
 
@@ -50,4 +50,6 @@ class PatchDiscriminator(nn.Module):
 def normal_init(m, mean, std):
     if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d):
         m.weight.data.normal_(mean, std)
-        m.bias.data.zero_()
+        if m.bias is not None:
+            m.bias.data.zero_()
+

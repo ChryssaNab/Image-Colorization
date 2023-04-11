@@ -36,11 +36,15 @@ def create_loss_dict():
     loss_D_fake = LossMetric()
     loss_D_real = LossMetric()
     loss_D = LossMetric()
+    loss_G_GAN = LossMetric()
+    loss_G_L1 = LossMetric()
     loss_G = LossMetric()
 
     return {'loss_D_fake': loss_D_fake,
             'loss_D_real': loss_D_real,
             'loss_D': loss_D,
+            'loss_G_GAN': loss_G_GAN,
+            'loss_G_L1': loss_G_L1,
             'loss_G': loss_G}
 
 

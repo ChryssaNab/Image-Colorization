@@ -9,7 +9,7 @@ class UNetEncoder(nn.Module):
     def __init__(self, input_channels=1, out_channels=64, kernel_size=4, stride=2, padding=1):
         super().__init__()
 
-        self.conv_layer = nn.Conv2d(input_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding)
+        self.conv_layer = nn.Conv2d(input_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding, bias=False)
 
         self.conv_block1 = self.conv_block(out_channels, out_channels * 2, kernel_size, stride, padding)
         self.conv_block2 = self.conv_block(out_channels * 2, out_channels * 4, kernel_size, stride, padding)
@@ -166,4 +166,5 @@ class UNetDecoder(nn.Module):
 def normal_init(m, mean, std):
     if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d):
         m.weight.data.normal_(mean, std)
-        #m.bias.data.zero_()
+        if m.bias is not None:
+            m.bias.data.zero_()

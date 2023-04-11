@@ -24,7 +24,7 @@ def main():
                         type=int, help="batch size")
     parser.add_argument("--num_epochs", default=num_epochs,
                         type=int, help="Number of epochs to train the model")
-    parser.add_argument("--pretrained", default=False,
+    parser.add_argument("--pretrained", default=True,
                         type=bool, help="Enable pre-training")
     parser.add_argument("--lr_g", default=0.0002,
                         type=float, help="Generator learning rate")

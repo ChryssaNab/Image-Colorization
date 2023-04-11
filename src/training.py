@@ -1,25 +1,29 @@
+import os
 import shutil
+import time
 
+import pandas as pd
 import torch
 
 from GANModel import ColorizationGAN
 from dataset import get_dataloader
-from utilities import *
-import os
-import pandas as pd
+from utilities import create_loss_dict, update_losses, get_timestamp
 
 # Path for saving model checkpoints
 PATH = os.path.join(os.pardir, "saved_models")
 
-# Save checkpoint
-if not (os.path.exists(PATH)):
-    os.mkdir(PATH)
+save_file_path = f"{PATH}/{get_timestamp()}/"
+if os.path.exists(save_file_path):
+    shutil.rmtree(save_file_path)
+os.makedirs(save_file_path)
 
 # Track losses
 losses = {
     'loss_D_fake': [],
     'loss_D_real': [],
     'loss_D': [],
+    'loss_G_GAN': [],
+    'loss_G_L1': [],
     'loss_G': []
 }
 
@@ -52,12 +56,9 @@ def print_losses(loss_meter_dict, save=True):
     if save:
         for loss_name, loss_meter in loss_meter_dict.items():
             losses[loss_name].append(loss_meter.avg)
-        print(losses)
-        print(type(losses))
-        print(losses.values())
         # Save loss values for each epoch as csv (saving happens in every epoch)
-        output = pd.DataFrame.from_dict(losses)
-        output.to_csv('output.csv', index=False)
+        output_losses = pd.DataFrame.from_dict(losses)
+        output_losses.to_csv('output_losses.csv', index=False)
 
 
 def train_model(args, checkpoint=1):
@@ -99,10 +100,6 @@ def train_model(args, checkpoint=1):
         print_losses(loss_meter_dict)
 
         if epoch % checkpoint == 0:
-            save_file_path = f"{PATH}/{get_timestamp()}/"
-            if os.path.exists(save_file_path):
-                os.rmdir(save_file_path)
-            os.mkdir(save_file_path)
             save_path = os.path.join(save_file_path, f'checkpoint_{str(epoch//checkpoint)}.pth')
 
             torch.save({
