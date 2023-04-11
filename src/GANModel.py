@@ -226,8 +226,11 @@ class ColorizationGAN(nn.Module):
 
         L = L.to(device)
         self.gen.eval()
-        # Get color channels from Generator
-        fake_ab = self.gen(L)
+        with torch.no_grad():
+            # Get color channels from Generator
+            fake_ab = self.gen(L)
+        # fake_ab = fake_ab.detach()
+        # self.gen.train()
         # Reshape L to a single channel
         L = torch.reshape(L[:, 0, :, :], (L.shape[0], 1, L.shape[2], L.shape[3]))
         # Compose fake images
