@@ -75,6 +75,6 @@ def get_timestamp():
     month = time_struct.tm_mon
     year = time_struct.tm_year
     # Construct the timestamp string in the format DAY:MONTH:YEAR
-    timestamp = f"{day:02d}:{month:02d}:{year}"
+    timestamp = f"{day:02d}_{month:02d}_{year}"
 
     return timestamp

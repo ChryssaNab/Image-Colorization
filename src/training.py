@@ -10,9 +10,9 @@ from dataset import get_dataloader
 from utilities import create_loss_dict, update_losses, get_timestamp
 
 # Path for saving model checkpoints
-PATH = os.path.join(os.pardir, "saved_models")
+PATH = os.path.join(os.pardir, "Results")
 
-save_file_path = f"{PATH}/{get_timestamp()}/"
+save_file_path = f"{PATH}/saved_models/{get_timestamp()}/"
 if os.path.exists(save_file_path):
     shutil.rmtree(save_file_path)
 os.makedirs(save_file_path)
@@ -58,7 +58,7 @@ def print_losses(loss_meter_dict, save=True):
             losses[loss_name].append(loss_meter.avg)
         # Save loss values for each epoch as csv (saving happens in every epoch)
         output_losses = pd.DataFrame.from_dict(losses)
-        output_losses.to_csv('output_losses.csv', index=False)
+        output_losses.to_csv(os.path.join(PATH, "output_losses.csv"), index=False)
 
 
 def train_model(args, checkpoint=1):

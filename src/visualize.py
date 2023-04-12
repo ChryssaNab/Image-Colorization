@@ -10,6 +10,11 @@ from skimage.color import lab2rgb
 from GANModel import ColorizationGAN
 from dataset import get_dataloader
 
+# Create output dir
+save_path = '../Results/output_images'
+if not (os.path.exists(save_path)):
+    os.makedirs(save_path)
+
 
 def load_checkpoints(generator, discriminator, ckeckpoint_path):
     checkpoint = torch.load(ckeckpoint_path)
@@ -17,6 +22,11 @@ def load_checkpoints(generator, discriminator, ckeckpoint_path):
     discriminator.load_state_dict(checkpoint['discriminator_state_dict'])
 
     return generator, discriminator
+
+
+def compute_l1_loss(y_true, y_pred):
+    mean_l1_loss = np.mean(np.abs(y_true - y_pred))
+    return mean_l1_loss
 
 
 def plot_losses(path):
@@ -90,31 +100,37 @@ def colorize(model, data):
         a batch of images
     """
 
-    # Create output dir
-    save_path = '../Results/output_images'
-    if not (os.path.exists(save_path)):
-        os.makedirs(save_path)
-
     # Split input images to L and ab channels
     L = data['input']
     ab = data['target']
 
     # Feed L channel to the model for inference
-    fake_colours = model.generate(L)
+    fake_ab = model.generate(L).detach().cpu()
+
+    # Compute L1 loss for the color channels
+    l1_loss = compute_l1_loss(fake_ab.numpy(), ab.numpy())
+
+    # Reshape L to a single channel
+    L = torch.reshape(L[:, 0, :, :], (L.shape[0], 1, L.shape[2], L.shape[3]))
+
+    # Rescale L (input), ab (target), and fake_colours (prediction)
+    L = (L + 1) * 50
+    ab = ab * 150
+    fake_ab = fake_ab * 150
+
+    # Compose fake images
+    fake_image = torch.cat([L, fake_ab], dim=1)
+
     i = 1
     # Save/display fake images
-    for image in fake_colours:
+    for image in fake_image:
         # Convert to numpy array and move the color channel from the first to the last dim
-        rgb_im = np.array(image.detach().cpu())*120
+        rgb_im = np.array(image.detach().cpu())
         rgb_im = np.moveaxis(rgb_im, 0, -1)
         rgb_im = cv2.cvtColor(rgb_im, cv2.COLOR_LAB2BGR)
-        rgb_im = cv2.resize(rgb_im, (320, 320))  # resize for bigger output
+        rgb_im = cv2.resize(rgb_im, (360, 320))  # resize for bigger output
         cv2.imwrite(save_path + '/' + f'fake{i}' + '.jpg', rgb_im * 255)  # must scale back to 0-255
         i += 1
-
-    # Rescale L and ab
-    L = (L + 1.) * 50.
-    ab = ab * 110.
 
     i = 1
     # Save/display grayscale images
@@ -123,7 +139,7 @@ def colorize(model, data):
         gray_im = np.array(image)
         gray_im = np.moveaxis(gray_im, 0, -1)
         gray_im = (gray_im + [0, 128, 128]) / [100, 255, 255]  # scale Lab image
-        gray_im = cv2.resize(gray_im, (320, 320))  # resize for bigger output
+        gray_im = cv2.resize(gray_im, (360, 320))  # resize for bigger output
         plt.imsave(save_path + '/' + f'gray{i}' + '.jpg', gray_im[:, :, 0], cmap='gray')
         i += 1
 
@@ -138,9 +154,7 @@ def colorize(model, data):
         rgb_im = np.array(image)
         rgb_im = np.moveaxis(rgb_im, 0, -1)
         rgb_im = cv2.cvtColor(rgb_im, cv2.COLOR_LAB2BGR)
-        # cv2.imshow("Real", rgb_im)  # show numpy array
-        # cv2.waitKey(0)  # wait for ay key to exit window
-        rgb_im = cv2.resize(rgb_im, (320, 320))  # resize for bigger output
+        rgb_im = cv2.resize(rgb_im, (360, 320))  # resize for bigger output
         cv2.imwrite(save_path + '/' + f'real{i}' + '.jpg', rgb_im * 255)  # must scale back to 0-255
         i += 1
 
@@ -151,20 +165,23 @@ def colorize(model, data):
         figure.savefig(save_path + '/' + f'space{i}' + '.jpg')
         i += 1
 
+    return l1_loss
+
 
 if __name__ == "__main__":
 
     # Set device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    image_path = "../Dataset/test/"
-    checkpoint_path = "../Results/saved_models/checkpoint_99.pth"
+    image_path = "../Dataset/training/"
+    checkpoint_path = "../Results/saved_models/12_04_2023/checkpoint_99.pth"
     image_size = 256
     pretrained = False
-    num_of_im = 6
+    num_of_im = 128
+    total_l1_loss = 0
 
     # Plot losses of Generator and Discriminator during training
-    #plot_losses('../Results/output_losses.csv')
+    plot_losses('../Results/output_losses.csv')
 
     # Create dataloader
     test_dataloader = get_dataloader(image_path, image_size, num_of_im, pretrained, training_mode=False)
@@ -176,5 +193,8 @@ if __name__ == "__main__":
     # If num_of_im is set to the number of images present in the input folder (e.g., 'test_images'), then all images
     # will be plotted. Otherwise, only the last num_of_im will.
     for data in test_dataloader:
-        colorize(model, data)
+        l1_loss = colorize(model, data)
+        total_l1_loss += l1_loss
         break
+
+    print(total_l1_loss)
