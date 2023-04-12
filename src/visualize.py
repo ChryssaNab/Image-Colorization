@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import torch
 from matplotlib import pyplot as plt
-from skimage.color import lab2rgb
+from numpy import uint8
 
 from GANModel import ColorizationGAN
 from dataset import get_dataloader
@@ -39,8 +39,6 @@ def plot_losses(path):
     """
 
     loss_df = pd.read_csv(path, index_col=False)
-    # for loss_name, loss_array in loss_dict.items():
-    #     print(f"{loss_name}: {loss_meter.avg:.5f}")
     plt.figure(figsize=(15, 10))
     plt.subplots_adjust(hspace=0.5)
     plt.suptitle('Losses')
@@ -72,6 +70,7 @@ def lab_space(image):
     lab_im = np.array(image)
     lab_im = np.moveaxis(lab_im, 0, -1)
     image_lab_scaled = (lab_im + [0, 128, 128]) / [100, 255, 255]
+    image_lab_scaled = np.clip(image_lab_scaled, 0, 1)
     fig, ax = plt.subplots(1, 4, figsize=(11, 8))
     ax[0].imshow(image_lab_scaled)
     ax[0].axis('off')
@@ -129,7 +128,7 @@ def colorize(model, data):
         rgb_im = np.moveaxis(rgb_im, 0, -1)
         rgb_im = cv2.cvtColor(rgb_im, cv2.COLOR_LAB2BGR)
         rgb_im = cv2.resize(rgb_im, (360, 320))  # resize for bigger output
-        cv2.imwrite(save_path + '/' + f'fake{i}' + '.jpg', rgb_im * 255)  # must scale back to 0-255
+        cv2.imwrite(save_path + '/' + f'fake{i}' + '.jpg', (rgb_im * 255).astype(uint8))  # must scale back to 0-255
         i += 1
 
     i = 1
@@ -143,8 +142,7 @@ def colorize(model, data):
         plt.imsave(save_path + '/' + f'gray{i}' + '.jpg', gray_im[:, :, 0], cmap='gray')
         i += 1
 
-    # Concat real L and ab
-    L = torch.reshape(L[:, 0, :, :], (L.shape[0], 1, L.shape[2], L.shape[3]))
+    # Concatenate real L and ab
     real_colours = torch.cat([L, ab], dim=1)
 
     i = 1
@@ -155,7 +153,7 @@ def colorize(model, data):
         rgb_im = np.moveaxis(rgb_im, 0, -1)
         rgb_im = cv2.cvtColor(rgb_im, cv2.COLOR_LAB2BGR)
         rgb_im = cv2.resize(rgb_im, (360, 320))  # resize for bigger output
-        cv2.imwrite(save_path + '/' + f'real{i}' + '.jpg', rgb_im * 255)  # must scale back to 0-255
+        cv2.imwrite(save_path + '/' + f'real{i}' + '.jpg', (rgb_im * 255).astype(uint8))  # must scale back to 0-255
         i += 1
 
     # Save/display separate Lab color channels
@@ -163,6 +161,7 @@ def colorize(model, data):
     for image in real_colours:
         figure = lab_space(image)
         figure.savefig(save_path + '/' + f'space{i}' + '.jpg')
+        figure.close()
         i += 1
 
     return l1_loss
@@ -173,7 +172,7 @@ if __name__ == "__main__":
     # Set device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    image_path = "../Dataset/training/"
+    image_path = "../Dataset/test/"
     checkpoint_path = "../Results/saved_models/12_04_2023/checkpoint_99.pth"
     image_size = 256
     pretrained = False
