@@ -1,10 +1,7 @@
-imageio==2.27.0
-lazy_loader==0.2
-networkx==3.1
-numpy==1.24.2
-packaging==23.0
+numpy==1.21.5
 Pillow==9.5.0
-PyWavelets==1.4.1
 scikit-image==0.20.0
-scipy
-tifffile==2023.3.21
+torch==1.13.0
+torchvision==0.14.0
+pandas==2.0.0
+matplotlib==3.7.1
