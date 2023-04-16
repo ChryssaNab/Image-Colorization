@@ -9,14 +9,6 @@ from GANModel import ColorizationGAN
 from dataset import get_dataloader
 from utilities import create_loss_dict, update_losses, get_timestamp
 
-# Path for saving model checkpoints
-PATH = os.path.join(os.pardir, "Results")
-
-save_file_path = f"{PATH}/saved_models/{get_timestamp()}/"
-if os.path.exists(save_file_path):
-    shutil.rmtree(save_file_path)
-os.makedirs(save_file_path)
-
 # Track losses
 losses = {
     'loss_D_fake': [],
@@ -48,7 +40,7 @@ def setup_input(data_batch, device):
     return input_real, target_real
 
 
-def print_losses(loss_meter_dict, save=True):
+def print_losses(loss_meter_dict, PATH, save=True):
     """ Displays current losses for each module and stores loss logs. """
     for loss_name, loss_meter in loss_meter_dict.items():
         print(f"{loss_name}: {loss_meter.avg:.5f}")
@@ -75,6 +67,15 @@ def train_model(args, checkpoint=1):
     # Set device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    # Path for saving model checkpoints
+    model_name = "U_Net" if not args.pretrained else "ResNet"
+    PATH = os.path.join(os.pardir, "Results", model_name)
+
+    save_file_path = f"{PATH}/saved_models/{get_timestamp()}/"
+    if os.path.exists(save_file_path):
+        shutil.rmtree(save_file_path)
+    os.makedirs(save_file_path)
+
     # Create data loader
     train_dataloader = get_dataloader(args.train_data_path, args.image_size, args.batch_size, args.pretrained, training_mode=True)
 
@@ -97,7 +98,7 @@ def train_model(args, checkpoint=1):
         print(f"\nEpoch {epoch+1}/{epochs}")
         print("Elapsed time:", end_time-start_time)
         # Display loss in every epoch
-        print_losses(loss_meter_dict)
+        print_losses(loss_meter_dict, PATH)
 
         if epoch % checkpoint == 0:
             save_path = os.path.join(save_file_path, f'checkpoint_{str(epoch//checkpoint)}.pth')

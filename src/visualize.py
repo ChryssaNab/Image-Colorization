@@ -10,11 +10,6 @@ from numpy import uint8
 from GANModel import ColorizationGAN
 from dataset import get_dataloader
 
-# Create output dir
-save_path = '../Results/output_images'
-if not (os.path.exists(save_path)):
-    os.makedirs(save_path)
-
 
 def load_checkpoints(generator, discriminator, ckeckpoint_path):
     checkpoint = torch.load(ckeckpoint_path)
@@ -87,7 +82,7 @@ def lab_space(image):
     return plt
 
 
-def colorize(model, data):
+def colorize(model, save_path, data):
     """ Outputs/displays the predicted Lab images from the given model, the target images, their L color channel
         and a grid with their L, a and b color channels separated.
 
@@ -172,18 +167,26 @@ if __name__ == "__main__":
     # Set device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    # To be changed
     image_path = "../Dataset/test/"
-    checkpoint_path = "../Results/saved_models/12_04_2023/checkpoint_99.pth"
-    image_size = 256
+    base_results_path = "../Results/U_Net"
+    checkpoint_path = os.path.join(base_results_path, "saved_models/16_04_2023/checkpoint_299.pth")
+
     pretrained = False
-    num_of_im = 128
+    batch_size = 128
+    image_size = 256
     total_l1_loss = 0
 
+    # Create output dir
+    save_path = os.path.join(base_results_path, 'output_images')
+    if not (os.path.exists(save_path)):
+        os.makedirs(save_path)
+
     # Plot losses of Generator and Discriminator during training
-    plot_losses('../Results/output_losses.csv')
+    plot_losses(os.path.join(base_results_path, 'output_losses.csv'))
 
     # Create dataloader
-    test_dataloader = get_dataloader(image_path, image_size, num_of_im, pretrained, training_mode=False)
+    test_dataloader = get_dataloader(image_path, image_size, batch_size, pretrained, training_mode=False)
 
     # Instantiate GAN model
     model = ColorizationGAN(device, pretrained=pretrained)
@@ -192,7 +195,7 @@ if __name__ == "__main__":
     # If num_of_im is set to the number of images present in the input folder (e.g., 'test_images'), then all images
     # will be plotted. Otherwise, only the last num_of_im will.
     for data in test_dataloader:
-        l1_loss = colorize(model, data)
+        l1_loss = colorize(model, save_path, data)
         total_l1_loss += l1_loss
         break
 

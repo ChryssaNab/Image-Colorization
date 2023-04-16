@@ -6,7 +6,7 @@ from training import train_model
 def main():
     image_size = 256
     batch_size = 16
-    num_epochs = 2
+    num_epochs = 100
     train_data_path = "../Dataset/training/"
     test_data_path = "../Dataset/test/"
 
@@ -24,7 +24,7 @@ def main():
                         type=int, help="batch size")
     parser.add_argument("--num_epochs", default=num_epochs,
                         type=int, help="Number of epochs to train the model")
-    parser.add_argument("--pretrained", default=True,
+    parser.add_argument("--pretrained", default=False,
                         type=bool, help="Enable pre-training")
     parser.add_argument("--lr_g", default=0.0002,
                         type=float, help="Generator learning rate")
