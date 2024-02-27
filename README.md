@@ -110,7 +110,7 @@ The following arguments can be provided to tune the settings of the training:
 > 
 > --lr_d: The discriminator's learning rate (default=0.0002)
 > 
-> --pretrained : If ${\color{red}TRUE}$, the pre-trained ResNet is instantiated, otherwise, if ${\color{red}FALSE}$ the U-Net with random initialization is used.
+> --pretrained : If ${\color{red}TRUE}$, the pre-trained ResNet is instantiated, else, if ${\color{red}FALSE}$ the U-Net with random initialization is used.
 
 
 ---
