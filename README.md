@@ -122,13 +122,13 @@ After completing model training, a folder named *results* is automatically gener
 ---
 ### [**Visualization**](#) <a name="visualization"></a>
 
-The script *visualize.py* loads a checkpoint, creates the corresponding model, plots the loss curves and of course passes images from test set through the model.
+The script *visualize.py* loads a checkpoint, initializes the corresponding model, plots the loss curves, and finally passes images from test set through the model.
 
 To execute this script, edit the following variables from the code itself:
-- base_results_path: points the parent results directory. For example "<path_to_project>/Deep_Learning_RUG/Results/U_net"
-- checkpoint_path: points to the model we want to load
-- pretrained: True for ResNet GAN and false for UNet GAN
-- batch_size: if necessary increase or decrease
+- *base_results_path:* Points the parent results directory. For example "<path_to_project>/Deep_Learning_RUG/Results/U_net"
+- *checkpoint_path:* Points to the model we want to load
+- *pretrained:* True for ResNet cGAN; False for UNet cGAN
+- *batch_size*
   
 Executing this script will show a grid with the progression of the losses based on the *output.csv* file and create a new directory under *Results* with the real, grayscale and generated images.
 
@@ -138,11 +138,11 @@ Executing this script will show a grid with the progression of the losses based 
 
 You can download our trained models from the following links:
 - ResNet cGAN: 
-  - Checkpoint: https://drive.google.com/file/d/1Sh8A9pZc8-isVd7ZL4lwDdnhUZQ6Bwgp/view?usp=share_link
-  - Loss csv: https://drive.google.com/file/d/1eEVHeMD2ZJDAmf5nYYjnT_9ZDM9QNTNV/view?usp=sharing
-- UNet cGAN: 
-  - Checkpoint: https://drive.google.com/file/d/1zk9hPP9b5ZNSTLfAenukymkPt_gLvK4A/view?usp=sharing
-  - Loss csv: https://drive.google.com/file/d/1gCKI4EAH56c49FvYdiQl-IKKj6TtkHUz/view?usp=sharing
+  - Last checkpoint: https://drive.google.com/file/d/1Sh8A9pZc8-isVd7ZL4lwDdnhUZQ6Bwgp/view?usp=share_link
+  - Loss CSV: https://drive.google.com/file/d/1eEVHeMD2ZJDAmf5nYYjnT_9ZDM9QNTNV/view?usp=sharing
+- U-Net cGAN: 
+  - Last checkpoint: https://drive.google.com/file/d/1zk9hPP9b5ZNSTLfAenukymkPt_gLvK4A/view?usp=sharing
+  - Loss CSV: https://drive.google.com/file/d/1gCKI4EAH56c49FvYdiQl-IKKj6TtkHUz/view?usp=sharing
 
 ### [**Team**](#) <a name="team"></a>
 
