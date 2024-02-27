@@ -39,13 +39,11 @@ $ source env/bin/activate
 
 **4.** Modify the *requirements.txt* file: 
 
-  - If your machine does not support CUDA, add the following line at the top of the *requirements.txt* file:
+> If your machine does not support CUDA, add the following line at the top of the *requirements.txt* file:
+>> extra-index-url https://download.pytorch.org/whl/cpu
 
-  >--extra-index-url https://download.pytorch.org/whl/cpu
-
-  - If your machine does support CUDA, add the following line instead, replacing **117** with the CUDA version your machine supports:
-
->--extra-index-url https://download.pytorch.org/whl/cu117
+> If your machine does support CUDA, add the following line instead, replacing **117** with the CUDA version your machine supports:
+>> extra-index-url https://download.pytorch.org/whl/cu117
 
 **5.** Install necessary requirements:
 
