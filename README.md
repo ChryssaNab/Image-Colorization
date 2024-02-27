@@ -1,4 +1,4 @@
-# Image colorization with Conditional Generative Adversarial Networks
+# Image colorization with <br /> Conditional Generative Adversarial Networks
 
 ### [**Contents**](#)
 1. [Project Description](#descr)
