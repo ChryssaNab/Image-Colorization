@@ -52,35 +52,64 @@ $ source env/bin/activate
 ``` shell
 $ pip install -r requirements.txt
 ```
+
 ---
 
 ### [**Dataset**](#) <a name="dataset"></a>
 
-Create two new folder under the parent directory called *initData/MS_COCO/training_set* and *initData/MS_COCO/test_set*.
+**1.** Under the parent directory, create the following two folders *initData/MS_COCO/training_set* & *initData/MS_COCO/test_set*:
 
-Download the MSCOCO dataset (2014 version) from the official website (https://cocodataset.org/#download), both the training and testing subsets. Unzip them and copy the output folders in the respective directories we created in the previous step. 
+``` shell
+$ mkdir -p initData/MS_COCO/training_set
+$ mkdir -p initData/MS_COCO/test_set
+```
 
-Create a new folder under the parent directory called *Dataset* and under two more directories called *training* and *test*. Navigate to the *src* directory and execute
+**2.** Download the original training and test subsets of the MS-COCO dataset (2014 version) from the official website (https://cocodataset.org/) using the `wget` command:
 
-`python helper_functions/data_sampling.py`
+``` shell
+$ wget -P initData/MS_COCO/training_set http://images.cocodataset.org/zips/train2014.zip
+$ wget -P initData/MS_COCO/test_set http://images.cocodataset.org/zips/test2014.zip
+```
 
-This will populate the training and test folder in *Dataset* with 8000 images and 2000 images from the original dataset respectively. Alternatively, if you want to train the model on the whole dataset, you can just copy all the images from the extracted dataset.
+**3.** Unzip the files:
+``` shell
+$ unzip initData/MS_COCO/training_set/train2014.zip -d initData/MS_COCO/training_set
+$ unzip initData/MS_COCO/test_set/test2014.zip -d initData/MS_COCO/test_set
+```
+
+**4.** Under the parent directory, create also the following two folders *Dataset/training* & *Dataset/test*:
+
+``` shell
+$ mkdir -p Dataset/training
+$ mkdir -p Dataset/test
+```
+
+**5.** Run the following command to randomly sample 8K images for the training set and 2K images for the test set from their respective entire subsets:
+
+``` shell
+$ python3 src/helper_functions/data_sampling.py
+```
+
+If you intend to train the model using the entire dataset instead, you can simply copy all the images from the extracted dataset.
 
 ---
 
 ### [**Execution**](#) <a name="execution"></a>
 
-To start the training, navigate to the *src* diretory and execute 
+To start the training, run the following command: 
 
-`python main.py <args>`
+``` shell
+$ python3 src/main.py <args>
+```
 
 The following arguments can be provided to tune the settings of the training:
 
 - --batch_size
 - --num_epochs
-- --pretrained : If set to true, the ResNet based cGAN will be used, if set to false the UNet based cGAN will be used.
 - --lr_g: The generator's learning rate
 - --lr_d: The discriminator's learning rate
+- --pretrained : If set to ${\color{green}TRUE}$, the ResNet based cGAN will be used, if set to ${\color{green}FALSE}$ the UNet based cGAN will be used.
+
 
 ---
 
