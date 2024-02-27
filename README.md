@@ -22,29 +22,34 @@ In this project we apply Conditional GANs on the task of image colorization - ad
 
 In order to prepare the environment follow the following commands in a new empty directory:
 
-**1.** Clone this repository:
+**1.** We assume that Python3 is already installed in the system.
+
+
+**2.** Clone this repository:
 
 ``` shell
 $ git clone https://github.com/ChryssaNab/Deep_Learning-RUG.git
 $ cd Deep_Learning-RUG
 ```
 
-**2.** Create a new python environment and activate it:
+**3.** Create a new Python environment and activate it:
 
 ``` shell
 $ python3 -m venv env
 $ source env/bin/activate
 ```
 
-**3.** Modify the requirements.txt if necessary. If your machine does not support CUDA, add the following line at the top of the *requirements.txt* file:
+**4.** Modify the *requirements.txt* file if necessary: 
 
->--extra-index-url https://download.pytorch.org/whl/cpu
+  - If your machine does not support CUDA, add the following line at the top of the *requirements.txt* file:
 
-If your machine does support CUDA, add the following line instead, replacing **117** with the CUDA version your machine supports:
+  >--extra-index-url https://download.pytorch.org/whl/cpu
+
+  - If your machine does support CUDA, add the following line instead, replacing **117** with the CUDA version your machine supports:
 
 >--extra-index-url https://download.pytorch.org/whl/cu117
 
-**4.** Install the requirements:
+**5.** Install the requirements:
 
 ``` shell
 $ pip install -r requirements.txt
@@ -110,4 +115,8 @@ You can download our trained models from the following links:
   - Checkpoint: https://drive.google.com/file/d/1zk9hPP9b5ZNSTLfAenukymkPt_gLvK4A/view?usp=sharing
   - Loss csv: https://drive.google.com/file/d/1gCKI4EAH56c49FvYdiQl-IKKj6TtkHUz/view?usp=sharing
 
+### [**Team**](#) <a name="team"></a>
 
+- [Chryssa Nampouri](https://github.com/ChryssaNab)
+- [Philip Andreadis](https://github.com/philip-andreadis)
+- Christodoulos Hadjichristodoulou
