@@ -47,7 +47,7 @@ $ source env/bin/activate
 
 >--extra-index-url https://download.pytorch.org/whl/cu117
 
-**5.** Install the requirements:
+**5.** Install necessary requirements:
 
 ``` shell
 $ pip install -r requirements.txt
