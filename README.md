@@ -2,7 +2,7 @@
 
 ### [**Contents**](#)
 1. [Project Description](#descr)
-1. [Project setup](#setup)
+1. [Setup](#setup)
 2. [Dataset](#dataset)
 3. [Execution](#execution)
 4. [Output](#output)
@@ -18,9 +18,7 @@ In this project we apply Conditional GANs on the task of image colorization - ad
 
 ---
 
-### [**Project setup**](#) <a name="setup"></a>
-
-In order to prepare the environment follow the following commands in a new empty directory:
+### [**Setup**](#) <a name="setup"></a>
 
 **1.** We assume that Python3 is already installed in the system.
 
