@@ -77,11 +77,11 @@ $ unzip initData/MS_COCO/training_set/train2014.zip -d initData/MS_COCO/training
 $ unzip initData/MS_COCO/test_set/test2014.zip -d initData/MS_COCO/test_set
 ```
 
-**4.** Under the parent directory, create also the following two folders *Dataset/training* & *Dataset/test*:
+**4.** Under the parent directory, create also the following two folders *dataset/training* & *dataset/test*:
 
 ``` shell
-$ mkdir -p Dataset/training
-$ mkdir -p Dataset/test
+$ mkdir -p dataset/training
+$ mkdir -p dataset/test
 ```
 
 **5.** Run the following command to randomly sample 8K images for the training set and 2K images for the test set from their respective entire subsets:
