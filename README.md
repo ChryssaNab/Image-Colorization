@@ -1,20 +1,24 @@
 # Image colorization with Conditional Generative Adversarial Networks
 
-Group 6:
-
-Philip Andreadis 
-
-Chryssa Nambouri
-
-Christodoulos Hadjichristodoulou
+### [**Contents**](#)
+1. [Project Description](#descr)
+1. [Setup](#setup)
+2. [Dataset](#dataset)
+3. [Execution](#execution)
+4. [Output](#output)
+5. [Visualization](#visualization)
+6. [Traned Models](#trained)
+7. [Team](#team)
 
 ---
+
+### [**Project Description**](#) <a name="descr"></a>
 
 In this project we apply Conditional GANs on the task of image colorization - adding color to grayscale images. We implement the framework proposed by Isola et al (https://arxiv.org/abs/1611.07004) and add our own twist by replacing the generator with one based on a ResNet architecture with pre-trained weights on the ImageNet dataset.
 
 ---
 
-## Setup
+### [**Setup**](#) <a name="setup"></a>
 
 In order to prepare the environment follow the following commands in a new empty directory:
 
@@ -47,7 +51,7 @@ $ pip install -r requirements.txt
 ```
 ---
 
-## Dataset
+### [**Dataset**](#) <a name="dataset"></a>
 
 Create two new folder under the parent directory called *initData/MS_COCO/training_set* and *initData/MS_COCO/test_set*.
 
@@ -61,7 +65,7 @@ This will populate the training and test folder in *Dataset* with 8000 images an
 
 ---
 
-## Execution
+### [**Execution**](#) <a name="execution"></a>
 
 To start the training, navigate to the *src* diretory and execute 
 
@@ -76,12 +80,13 @@ The following arguments can be provided to tune the settings of the training:
 - --lr_d: The discriminator's learning rate
 
 ---
-## Output
+
+### [**Output**](#) <a name="output"></a>
 
 After the model is done training, a folder *Results* will be created and under it the folder *Unet* or *Resnet* depending on the training configuration. In them, we can find the checkpoints of the model for each epoch and a csv with the losses over all the epochs.
 
 ---
-## Visualization
+### [**Visualization**](#) <a name="visualization"></a>
 
 The script *visualize.py* loads a checkpoint, creates the corresponding model, plots the loss curves and of course passes images from test set through the model.
 
@@ -95,7 +100,7 @@ Executing this script will show a grid with the progression of the losses based 
 
 ---
 
-## Trained models
+### [**Trained Models**](#) <a name="trained"></a>
 
 You can download our trained models from the following links:
 - ResNet cGAN: 
