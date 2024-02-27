@@ -7,8 +7,8 @@ def main():
     image_size = 256
     batch_size = 16
     num_epochs = 100
-    train_data_path = "../Dataset/training/"
-    test_data_path = "../Dataset/test/"
+    train_data_path = "./dataset/training/"
+    test_data_path = "./dataset/test/"
 
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter

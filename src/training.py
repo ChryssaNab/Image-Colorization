@@ -69,7 +69,7 @@ def train_model(args, checkpoint=1):
 
     # Path for saving model checkpoints
     model_name = "U_Net" if not args.pretrained else "ResNet"
-    PATH = os.path.join(os.pardir, "Results", model_name)
+    PATH = os.path.join("./results", model_name)
 
     save_file_path = f"{PATH}/saved_models/{get_timestamp()}/"
     if os.path.exists(save_file_path):
