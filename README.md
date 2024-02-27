@@ -2,12 +2,12 @@
 
 ### [**Contents**](#)
 1. [Project Description](#descr)
-1. [Setup](#setup)
+1. [Project setup](#setup)
 2. [Dataset](#dataset)
 3. [Execution](#execution)
 4. [Output](#output)
 5. [Visualization](#visualization)
-6. [Traned Models](#trained)
+6. [Trained Models](#trained)
 7. [Team](#team)
 
 ---
@@ -18,7 +18,7 @@ In this project we apply Conditional GANs on the task of image colorization - ad
 
 ---
 
-### [**Setup**](#) <a name="setup"></a>
+### [**Project setup**](#) <a name="setup"></a>
 
 In order to prepare the environment follow the following commands in a new empty directory:
 
