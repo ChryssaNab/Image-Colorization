@@ -18,19 +18,21 @@ In this project we apply Conditional GANs on the task of image colorization - ad
 
 In order to prepare the environment follow the following commands in a new empty directory:
 
-Clone the repository:
+**1.** Clone this repository:
 
-`git clone https://github.com/ChryssaNab/Deep_Learning-RUG.git`
+``` shell
+$ git clone https://github.com/ChryssaNab/Deep_Learning-RUG.git
+$ cd Deep_Learning-RUG
+```
 
-`cd Deep_Learning-RUG`
+**2.** Create a new python environment and activate it:
 
-Create a new python environment and activate it:
+``` shell
+$ python -m venv env
+$ source env/bin/activate
+```
 
-`python -m venv .venv`  
-
-`source .venv/Scripts/activate`
-
-Modify the requirements.txt if necessary. If your machine does not support CUDA, add the following line at the top of the *requirements.txt* file:
+**3.** Modify the requirements.txt if necessary. If your machine does not support CUDA, add the following line at the top of the *requirements.txt* file:
 
 >--extra-index-url https://download.pytorch.org/whl/cpu
 
@@ -38,10 +40,11 @@ If your machine does support CUDA, add the following line instead, replacing **1
 
 >--extra-index-url https://download.pytorch.org/whl/cu117
 
-Install the requirements:
+**4.** Install the requirements:
 
-`pip install -r requirements.txt`
-
+``` shell
+$ pip install -r requirements.txt
+```
 ---
 
 ## Dataset
