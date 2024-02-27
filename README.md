@@ -32,7 +32,7 @@ $ cd Deep_Learning-RUG
 **2.** Create a new python environment and activate it:
 
 ``` shell
-$ python -m venv env
+$ python3 -m venv env
 $ source env/bin/activate
 ```
 
