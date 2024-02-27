@@ -37,7 +37,7 @@ $ python3 -m venv env
 $ source env/bin/activate
 ```
 
-**4.** Modify the *requirements.txt* file if necessary: 
+**4.** Modify the *requirements.txt* file: 
 
   - If your machine does not support CUDA, add the following line at the top of the *requirements.txt* file:
 
