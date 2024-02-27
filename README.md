@@ -117,7 +117,7 @@ The following arguments can be provided to tune the settings of the training:
 
 ### [**Output**](#) <a name="output"></a>
 
-After completing model training, a folder named *results* is automatically generated. Within this folder, a sub-directory named either *U_Net* or *ResNet* is created based on the training configuration. These directories contain the model checkpoints for each epoch and a CSV file documenting the losses across all epochs.
+After completing model training, a folder named *results* is automatically generated. Within this folder, a sub-directory named either *U_Net* or *ResNet* is created based on the training configuration. This directory contains the model checkpoints for each epoch and a CSV file documenting the losses across all epochs.
 
 ---
 ### [**Visualization**](#) <a name="visualization"></a>
