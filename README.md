@@ -55,7 +55,7 @@ $ pip install -r requirements.txt
 
 ### [**Dataset Configuration**](#) <a name="dataset"></a>
 
-**1.** Under the parent directory, create the following two folders *initData/MS_COCO/training_set* & *initData/MS_COCO/test_set*:
+**1.** Under the parent directory, create the following two folders `initData/MS_COCO/training_set` & `initData/MS_COCO/test_set`:
 
 ``` shell
 $ mkdir -p initData/MS_COCO/training_set
@@ -75,7 +75,7 @@ $ unzip initData/MS_COCO/training_set/train2014.zip -d initData/MS_COCO/training
 $ unzip initData/MS_COCO/test_set/test2014.zip -d initData/MS_COCO/test_set
 ```
 
-**4.** Under the parent directory, create also the following two folders *dataset/training* & *dataset/test*:
+**4.** Under the parent directory, create also the following two folders `dataset/training` & `dataset/training`:
 
 ``` shell
 $ mkdir -p dataset/training
@@ -117,7 +117,7 @@ The following arguments can be provided to tune the settings of the training:
 
 ### [**Output**](#) <a name="output"></a>
 
-After the model is done training, a folder *Results* will be created and under it the folder *Unet* or *Resnet* depending on the training configuration. In them, we can find the checkpoints of the model for each epoch and a csv with the losses over all the epochs.
+After model training is complete, an automatic creation of a folder named `results` takes place. Within this folder, a sub-directory named either `U_Net` or `ResNet` is generated based on the training configuration. These directories contain the model checkpoints for each epoch and a CSV file documenting the losses across all epochs.
 
 ---
 ### [**Visualization**](#) <a name="visualization"></a>
