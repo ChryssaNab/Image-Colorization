@@ -102,11 +102,11 @@ $ python3 src/main.py <args>
 
 The following arguments can be provided to tune the settings of the training:
 
-- --batch_size
-- --num_epochs
-- --lr_g: The generator's learning rate
-- --lr_d: The discriminator's learning rate
-- --pretrained : If set to ${\color{green}TRUE}$, the ResNet based cGAN will be used, if set to ${\color{green}FALSE}$ the UNet based cGAN will be used.
+- --batch_size (default=16)
+- --num_epochs (num_epochs=100)
+- --lr_g: The generator's learning rate (default=0.0002)
+- --lr_d: The discriminator's learning rate (default=0.0002)
+- --pretrained : If ${\color{red}TRUE}$, the ResNet with pre-trained weights is instantiated, otherwise, if ${\color{red}FALSE}$ the U-Net with random initialization is used.
 
 
 ---
