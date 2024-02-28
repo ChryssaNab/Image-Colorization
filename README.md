@@ -136,7 +136,7 @@ Running this script will display a grid illustrating the progression of losses b
 
 ### [**Trained Models**](#) <a name="trained"></a>
 
-You can download our trained models from the following links:
+You can download our trained models for 300 epochs from the following links:
 - ResNet cGAN: 
   - Last checkpoint: https://drive.google.com/file/d/1Sh8A9pZc8-isVd7ZL4lwDdnhUZQ6Bwgp/view?usp=share_link
   - Loss CSV: https://drive.google.com/file/d/1eEVHeMD2ZJDAmf5nYYjnT_9ZDM9QNTNV/view?usp=sharing
