@@ -3,7 +3,7 @@
 ### [**Contents**](#)
 1. [Project Description](#descr)
 1. [Setup](#setup)
-2. [Dataset Configuration](#dataset)
+2. [Data Configuration](#dataset)
 3. [Execution](#execution)
 4. [Output](#output)
 5. [Visualization](#visualization)
@@ -53,7 +53,7 @@ $ pip install -r requirements.txt
 
 ---
 
-### [**Dataset Configuration**](#) <a name="dataset"></a>
+### [**Data Configuration**](#) <a name="dataset"></a>
 
 **1.** Under the parent directory, create the following two folders *initData/MS_COCO/training_set* & *initData/MS_COCO/test_set*:
 
