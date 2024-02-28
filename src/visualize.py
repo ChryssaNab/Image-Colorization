@@ -168,8 +168,8 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # To be changed
-    image_path = "../Dataset/test/"
-    base_results_path = "../Results/U_Net"
+    image_path = "./dataset/test/"
+    base_results_path = "./results/U_Net"
     checkpoint_path = os.path.join(base_results_path, "saved_models/16_04_2023/checkpoint_299.pth")
 
     pretrained = False
