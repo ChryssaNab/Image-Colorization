@@ -14,9 +14,9 @@
 
 ### [**Project Description**](#) <a name="descr"></a>
 
-In this project, we employ Conditional Generative Adversarial Networks (cGANs) for the task of image colorization, which involves adding color to grayscale images. Initially, we adopt the framework proposed by Isola et al. [[1]](#1), where the generator follows a UNet-like architecture [[2]](#2) trained from scratch. Subsequently, we introduce our own modification by replacing the generator with one based on a ResNet architecture pre-trained on the ImageNet dataset. The aim is to conduct a comparative analysis between the two different generator modules of the final network and assess the impact of transfer learning and pre-trained knowledge.
+In this project, we employ Conditional Generative Adversarial Networks (cGANs) for the task of image colorization, which involves adding color to grayscale images. Initially, we adopt the framework proposed by Isola et al. [[1]](#1), where the generator follows a UNet-like architecture [[2]](#2) trained from scratch. Subsequently, we introduce our own modification by replacing the generator with one based on a ResNet architecture pre-trained on the ImageNet dataset [[3]](#3). The aim is to conduct a comparative analysis between the two different generator modules of the final network and assess the impact of transfer learning and pre-trained knowledge.
 
-All experiments are conducted on a subset of the MS-COCO dataset [[3]](#3) due to computational constraints. For a comprehensive overview of the methodology and final results, please refer to the [Report](https://github.com/ChryssaNab/Deep_Learning-RUG/blob/main/report/Image_Colorization_with_CGANs.pdf).
+All experiments are conducted on a subset of the MS-COCO dataset [[4]](#4) due to computational constraints. For a comprehensive overview of the methodology and final results, please refer to the [Report](https://github.com/ChryssaNab/Deep_Learning-RUG/blob/main/report/Image_Colorization_with_CGANs.pdf).
 
 ---
 "...the **go to** statement should be abolished..." .
@@ -156,6 +156,9 @@ Isola, P., Zhu, J. Y., Zhou, T., & Efros, A. A. (2017). Image-to-image translati
 Ronneberger, O., Fischer, P., & Brox, T. (2015). U-net: Convolutional networks for biomedical image segmentation. *In Medical Image Computing and Computer-Assisted Intervention–MICCAI 2015: 18th International Conference, Munich, Germany, October 5-9, 2015, Proceedings, Part III 18 (pp. 234-241).* Springer International Publishing.
 
 <a id="3">[3]</a> 
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., & Fei-Fei, L. (2009). Imagenet: A large-scale hierarchical image database. *In 2009 IEEE conference on computer vision and pattern recognition (pp. 248–255).*
+
+<a id="4">[4]</a> 
 Lin, T. Y., Maire, M., Belongie, S., Hays, J., Perona, P., Ramanan, D., ... & Zitnick, C. L. (2014). Microsoft coco: Common objects in context. *In Computer Vision–ECCV 2014: 13th European Conference, Zurich, Switzerland, September 6-12, 2014, Proceedings, Part V 13 (pp. 740-755).* Springer International Publishing.
 
 ---
