@@ -122,7 +122,7 @@ During model training, a folder named *results/* is automatically generated. Wit
 ---
 ### [**Visualization**](#) <a name="visualization"></a>
 
-The script *visualize.py* loads a checkpoint, initializes the corresponding model, plots the loss curves, and finally evaluates the model on the test set.
+The script *visualize.py* loads a checkpoint, initializes the corresponding model, and evaluates the model on the test set.
 
 To execute this script, first modify the following variables from the code itself:
 - *base_results_path:*  Indicates the directory for results (default="./results/U_net")
