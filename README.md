@@ -146,6 +146,8 @@ You can download our trained models for 300 epochs from the following links:
   - Last checkpoint: https://drive.google.com/file/d/1zk9hPP9b5ZNSTLfAenukymkPt_gLvK4A/view?usp=sharing
   - Loss CSV: https://drive.google.com/file/d/1gCKI4EAH56c49FvYdiQl-IKKj6TtkHUz/view?usp=sharing
 
+---
+
 ## References
 <a id="1">[1]</a> 
 Isola, P., Zhu, J. Y., Zhou, T., & Efros, A. A. (2017). Image-to-image translation with conditional adversarial networks. *In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1125-1134).*
@@ -155,6 +157,8 @@ Ronneberger, O., Fischer, P., & Brox, T. (2015). U-net: Convolutional networks f
 
 <a id="3">[3]</a> 
 Lin, T. Y., Maire, M., Belongie, S., Hays, J., Perona, P., Ramanan, D., ... & Zitnick, C. L. (2014). Microsoft coco: Common objects in context. *In Computer Vision–ECCV 2014: 13th European Conference, Zurich, Switzerland, September 6-12, 2014, Proceedings, Part V 13 (pp. 740-755).* Springer International Publishing.
+
+---
 
 ### [**Team**](#) <a name="team"></a>
 
