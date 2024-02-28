@@ -130,7 +130,7 @@ To execute this script, first modify the following variables from the code itsel
 - *pretrained:* Set to True for ResNet cGAN and False for UNet cGAN.
 - *batch_size*
   
-Executing this script will show a grid with the progression of the losses based on the *output.csv* file and create a new directory under *Results* with the real, grayscale and generated images.
+Running this script will display a grid illustrating the progression of losses based on the *output.csv* file. Additionally, it will generate a new directory *output_images/* within *./results/$MODEL/* containing the real, grayscale, and generated images.
 
 ---
 
