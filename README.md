@@ -1,4 +1,4 @@
-# Image colorization with <br /> Conditional Generative Adversarial Networks
+# Image ${\color{red}C}$ ${\color{orange}o}$ ${\color{yellow}l}$ ${\color{green}o}$ ${\color{blue}r}$ ${\color{purple}i}$ ${\color{red}z}$ ${\color{orange}a}$ ${\color{yellow}t}$ ${\color{green}i}$ ${\color{blue}o}$ ${\color{purple}n}$ with <br /> Conditional Generative Adversarial Networks
 
 ### [**Contents**](#)
 1. [Project Description](#descr)
@@ -110,7 +110,7 @@ The following arguments can be provided to tune the settings of the training:
 > 
 > --lr_d: The discriminator's learning rate (default=0.0002)
 > 
-> --pretrained : If set to ${\color{red}TRUE}$, the pre-trained ResNet is instantiated; otherwise, if ${\color{red}FALSE}$, the U-Net with random initialization is utilized (default=False).
+> --pretrained : If set to TRUE, the pre-trained ResNet is instantiated; otherwise, if FALSE, the U-Net with random initialization is utilized (default=False).
 
 
 ---
@@ -122,12 +122,12 @@ During model training, a folder named *results/* is automatically generated. Wit
 ---
 ### [**Visualization**](#) <a name="visualization"></a>
 
-The script *visualize.py* loads a checkpoint, initializes the corresponding model, plots the loss curves, and finally passes images from test set through the model.
+The script *visualize.py* loads a checkpoint, initializes the corresponding model, plots the loss curves, and finally evaluates the model on the test set.
 
-To execute this script, edit the following variables from the code itself:
-- *base_results_path:* Points the parent results directory. For example "<path_to_project>/Deep_Learning_RUG/Results/U_net"
-- *checkpoint_path:* Points to the model we want to load
-- *pretrained:* True for ResNet cGAN; False for UNet cGAN
+To execute this script, first modify the following variables from the code itself:
+- *base_results_path:*  Indicates the directory for results (default="./results/U_net")
+- *checkpoint_path:* Indicates the model we intend to load.
+- *pretrained:* Set to True for ResNet cGAN and False for UNet cGAN.
 - *batch_size*
   
 Executing this script will show a grid with the progression of the losses based on the *output.csv* file and create a new directory under *Results* with the real, grayscale and generated images.
