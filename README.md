@@ -7,7 +7,7 @@
 3. [Execution](#execution)
 4. [Output](#output)
 5. [Visualization](#visualization)
-6. [Trained Models](#trained)
+6. [Saved Models](#trained)
 7. [Team](#team)
 
 ---
@@ -133,7 +133,7 @@ Running this script will display a grid illustrating the progression of losses b
 
 ---
 
-### [**Trained Models**](#) <a name="trained"></a>
+### [**Saved Models**](#) <a name="trained"></a>
 
 You can download our trained models for 300 epochs from the following links:
 - ResNet cGAN: 
