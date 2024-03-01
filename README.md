@@ -22,7 +22,7 @@ All experiments are conducted on a subset of the MS-COCO dataset [[4]](#4) due t
 
 ### [**Setup**](#) <a name="setup"></a>
 
-**1.** We assume that Python3 is already installed in the system.
+**1.** We assume that Python3 is already installed on the system.
 
 
 **2.** Clone this repository:
