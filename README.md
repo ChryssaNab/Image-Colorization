@@ -30,8 +30,8 @@ The current project was implemented in the context of the course "Deep Learning"
 **2.** Clone this repository:
 
 ``` shell
-$ git clone https://github.com/ChryssaNab/Deep_Learning-RUG.git
-$ cd Deep_Learning-RUG
+$ git clone https://github.com/ChryssaNab/Image-Colorization.git
+$ cd Image-Colorization
 ```
 
 **3.** Create a new Python environment and activate it:
