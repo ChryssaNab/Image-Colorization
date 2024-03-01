@@ -14,9 +14,7 @@
 
 ### [**Project Description**](#) <a name="descr"></a>
 
-In this project, we employ Conditional Generative Adversarial Networks (cGANs) for the task of image colorization, which involves adding color to grayscale images. Initially, we adopt the framework proposed by Isola et al. [[1]](#1), where the generator follows a U-Net-like architecture [[2]](#2) trained from scratch. Subsequently, we introduce our own modification by replacing the generator with one based on a ResNet architecture pre-trained on the ImageNet dataset [[3]](#3). The aim is to conduct a comparative analysis between the two different generator modules of the final network and assess the impact of transfer learning and pre-trained knowledge.
-
-All experiments are conducted on a subset of the MS-COCO dataset [[4]](#4) due to computational constraints.
+In this project, we employ Conditional Generative Adversarial Networks (cGANs) for the task of image colorization, which involves adding color to grayscale images. Initially, we adopt the framework proposed by Isola et al. [[1]](#1), where the generator follows a U-Net-like architecture [[2]](#2) trained from scratch. Subsequently, we introduce our own modification by replacing the generator with one based on a ResNet architecture pre-trained on the ImageNet dataset [[3]](#3). The aim is to conduct a comparative analysis between the two different generator modules of the final network and assess the impact of transfer learning and pre-trained knowledge. All experiments are conducted on a subset of the MS-COCO dataset [[4]](#4) due to computational constraints.
 
 The current project was implemented in the context of the course "Deep Learning" taught by Professors [Matias Valdenegro](https://mvaldenegro.github.io/) and [Matthia Sabatelli](https://scholar.google.it/citations?hl=it&user=YO2Php8AAAAJ&view_op=list_works&sortby=pubdate) at [University of Groningen](https://www.rug.nl/?lang=en). For a comprehensive overview of the methodology and final results, please refer to the [Report](https://github.com/ChryssaNab/Deep_Learning-RUG/blob/main/report/Image_Colorization_with_CGANs.pdf). 
 
