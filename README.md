@@ -18,7 +18,7 @@ In this project, we employ Conditional Generative Adversarial Networks (cGANs) f
 
 All experiments are conducted on a subset of the MS-COCO dataset [[4]](#4) due to computational constraints. For a comprehensive overview of the methodology and final results, please refer to the [Report](https://github.com/ChryssaNab/Deep_Learning-RUG/blob/main/report/Image_Colorization_with_CGANs.pdf). 
 
-The current project was implemented in the context of the course "Deep Learning" taught by Professors Matias Valdenegro and Matthia Sabatelli at RUG University. 
+The current project was implemented in the context of the course "Deep Learning" taught by Professors Matias Valdenegro and Matthia Sabatelli at RUG University (https://www.rug.nl/?lang=en). 
 
 ---
 
