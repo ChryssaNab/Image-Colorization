@@ -156,6 +156,10 @@ To execute the script, first modify the following variables from the code itself
 - *base_results_path:*  Indicates the directory for results (default="./results/U_net")
 - *checkpoint_path:* Indicates the path of the model we intend to load.
 - *pretrained:* Set to True for ResNet cGAN and False for UNet cGAN.
+
+``` shell
+$ python3 src/visualize.py
+```
   
 Running this script will display a grid illustrating the progression of losses based on the *output.csv* file. Additionally, it will generate a new directory *output_images/* within *./results/$MODEL/* containing the real, grayscale, and generated images.
 
