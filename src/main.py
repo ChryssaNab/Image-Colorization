@@ -21,11 +21,12 @@ def main():
     parser.add_argument("--image_size", default=image_size,
                         type=int, help="Size of images to be fed in the model")
     parser.add_argument("--batch_size", default=batch_size,
-                        type=int, help="batch size")
+                        type=int, help="The batch size")
     parser.add_argument("--num_epochs", default=num_epochs,
-                        type=int, help="Number of epochs to train the model")
+                        type=int, help="The number of epochs to train the model")
     parser.add_argument("--pretrained", default=False,
-                        type=bool, help="Enable pre-training")
+                        type=bool, help="If set to TRUE, the pre-trained ResNet model is instantiated; "
+                                        "otherwise, if FALSE, the U-Net with random initialization is utilized")
     parser.add_argument("--lr_g", default=0.0002,
                         type=float, help="Generator learning rate")
     parser.add_argument("--lr_d", default=0.0002,
