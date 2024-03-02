@@ -98,12 +98,36 @@ If you intend to train the model using the entire dataset instead, you can simpl
 
 ### [**Execution**](#) <a name="execution"></a>
 
-To start the training, run the following command: 
+To start the training, call the *main.py*. 
 
 ``` shell
-$ python3 src/main.py <args>
+$ python3 src/main.py -h
+usage: main.py [-h] [--train_data_path TRAIN_DATA_PATH]
+               [--test_data_path TEST_DATA_PATH] [--image_size IMAGE_SIZE]
+               [--batch_size BATCH_SIZE] [--num_epochs NUM_EPOCHS]
+               [--pretrained PRETRAINED] [--lr_g LR_G] [--lr_d LR_D]
+
+options:
+  -h, --help            show this help message and exit
+  --train_data_path TRAIN_DATA_PATH
+                        The path with the training images (default: ./dataset/training/)
+  --test_data_path TEST_DATA_PATH
+                        The path with the test images (default: ./dataset/test/)
+  --image_size IMAGE_SIZE
+                        Size of images to be fed in the model (default: 256)
+  --batch_size BATCH_SIZE
+                        The batch size (default: 16)
+  --num_epochs NUM_EPOCHS
+                        The number of epochs to train the model (default: 100)
+  --pretrained PRETRAINED
+                        If set to TRUE, the pre-trained ResNet model is instantiated;
+                        otherwise, if FALSE, the U-Net with random initialization is utilized (default: False)
+  --lr_g LR_G           Generator learning rate (default: 0.0002)
+  --lr_d LR_D           Discriminator learning rate (default: 0.0002)
+
 ```
 
+<!---
 The following arguments can be provided to tune the settings of the training:
 
 > --batch_size (default=16)
@@ -115,7 +139,7 @@ The following arguments can be provided to tune the settings of the training:
 > --lr_d: The discriminator's learning rate (default=0.0002)
 > 
 > --pretrained : If set to TRUE, the pre-trained ResNet is instantiated; otherwise, if FALSE, the U-Net with random initialization is utilized (default=False).
-
+-->
 
 ---
 
