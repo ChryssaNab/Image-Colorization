@@ -120,8 +120,8 @@ options:
   --num_epochs NUM_EPOCHS
                         The number of epochs to train the model (default: 100)
   --pretrained PRETRAINED
-                        If set to TRUE, the pre-trained ResNet model is instantiated;
-                        otherwise, if FALSE, the U-Net with random initialization is utilized (default: False)
+                        If set to TRUE, the pre-trained ResNet model is instantiated; otherwise,
+                        if FALSE, the U-Net with random initialization is utilized (default: False)
   --lr_g LR_G           Generator learning rate (default: 0.0002)
   --lr_d LR_D           Discriminator learning rate (default: 0.0002)
 
