@@ -86,7 +86,7 @@ $ mkdir -p dataset/training
 $ mkdir -p dataset/test
 ```
 
-**5.** Run the following command to randomly sample 8*K* images for the training set and 2*K* images for the test set from their respective entire subsets:
+**5.** Run the following command to randomly sample 8*K* images for the training set and 2*K* images for the test set from their respective entire sets:
 
 ``` shell
 $ python3 src/helper_functions/data_sampling.py
